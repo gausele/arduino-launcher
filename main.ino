@@ -13,10 +13,10 @@ const int servoPin = 9;
 const int minAngle = 0;
 const int maxAngle = 90;
 
-const float velocity = 5.0;   // m/s
-const float g = 9.8;          // gravity
+const float velocity = 5.0;   
+const float g = 9.8;          
 
-bool fired = false; // ensures servo fires once per button press
+bool fired = false;
 
 void setup() {
   launcherServo.attach(servoPin);
@@ -41,7 +41,6 @@ void loop() {
   float range = 0.46 * sin(theta);
 
 
-  // Update LCD
   lcd.setCursor(0,0);
   lcd.print("Angle:");
   lcd.print(angle);
@@ -55,22 +54,20 @@ void loop() {
     lcd.print(" cm ");
   }
 
-  // Button logic
   if (digitalRead(buttonPin) == LOW && !fired) {
     fired = true; // mark as fired
     lcd.setCursor(0,1);
     lcd.print("Launching...    ");
 
-    launcherServo.write(angle); // fire
-    delay(400);                 // give servo time to move
+    launcherServo.write(angle); 
+    delay(400);   
     launcherServo.write(minAngle);
-    delay(500);                 // debounce / reset
-
+    delay(500);   
     lcd.setCursor(0,1);
     lcd.print("Ready           ");
   }
 
   if (digitalRead(buttonPin) == HIGH) {
-    fired = false; // reset trigger when button released
+    fired = false;
   }
 }
